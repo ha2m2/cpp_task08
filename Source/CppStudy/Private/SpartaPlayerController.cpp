@@ -85,6 +85,33 @@ void ASpartaPlayerController::ShowMainMenu(bool bIsRestart)
 				ButtonText->SetText(FText::FromString(TEXT("Start")));
 			}
 		}
+
+		if (UTextBlock* QuitButtonText = Cast<UTextBlock>(MainMenuWidgetInstance->GetWidgetFromName(TEXT("QuitButtonText"))))
+		{
+			if (bIsRestart)
+			{
+				QuitButtonText->SetText(FText::FromString(TEXT("Menu")));
+			}
+			else
+			{
+				QuitButtonText->SetText(FText::FromString(TEXT("Quit")));
+			}
+		}
+
+		if (UTextBlock* TitleText = Cast<UTextBlock>(MainMenuWidgetInstance->GetWidgetFromName(TEXT("InfoText"))))
+		{
+			if (bIsRestart)
+			{
+				if (USpartaGameInstance* SpartaGameInstance = Cast<USpartaGameInstance>(GetGameInstance()))
+				{
+					TitleText->SetText(FText::FromString(FString::Printf(TEXT("Total Score : %d"), SpartaGameInstance->TotalScore)));
+				}
+			}
+			else
+			{
+				TitleText->SetText(FText::FromString(TEXT("Get Coin Game")));
+			}
+		}
 	}
 }
 
@@ -130,4 +157,23 @@ void ASpartaPlayerController::StartGame()
 	}
 
 	UGameplayStatics::OpenLevel(GetWorld(), FName("BasicLevel"));
+}
+
+void ASpartaPlayerController::QuitGame()
+{
+	FString CurrentMapName = GetWorld()->GetMapName();
+
+	if (CurrentMapName.Contains("MenuLevel"))
+	{
+		UKismetSystemLibrary::QuitGame(
+			GetWorld(),
+			this,
+			EQuitPreference::Quit,
+			false
+		);
+	}
+	else
+	{
+		UGameplayStatics::OpenLevel(GetWorld(), FName("MenuLevel"));
+	}
 }

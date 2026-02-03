@@ -51,7 +51,11 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Health")
 	virtual void OnDeath();
 
-	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+	virtual float TakeDamage(
+		float DamageAmount,
+		struct FDamageEvent const& DamageEvent,
+		AController* EventInstigator,
+		AActor* DamageCauser) override;
 
 private:
 	float NormalSpeed;

@@ -160,13 +160,13 @@ void ASpartaCharacter::StopSprint(const FInputActionValue& value)
 
 int32 ASpartaCharacter::GetHealth() const
 {
-	return int32();
+	return (int32)Health;
 }
 
 void ASpartaCharacter::AddHealth(float Amount)
 {
 	Health = FMath::Clamp(Health + Amount, 0.0f, MaxHealth);
-	UE_LOG(LogTemp, Log, TEXT("Health increased to: %f"), Health);
+	//UE_LOG(LogTemp, Log, TEXT("Health increased to: %f"), Health);
 }
 
 float ASpartaCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
@@ -174,7 +174,7 @@ float ASpartaCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 	float ActualDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 
 	Health = FMath::Clamp(Health - DamageAmount, 0.0f, MaxHealth);
-	UE_LOG(LogTemp, Warning, TEXT("Health decreased to: %f"), Health);
+	//UE_LOG(LogTemp, Warning, TEXT("Health decreased to: %f"), Health);
 
 	if (Health <= 0.0f)
 	{
